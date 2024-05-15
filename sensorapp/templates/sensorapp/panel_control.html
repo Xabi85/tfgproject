@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        function actualizarTemperatura() {
+            $.ajax({
+                url: '/api/temperatura/',  // Asegúrate de que esta URL coincida con la configurada en urls.py
+                type: 'GET',
+                success: function(data) {
+                    $('#temperatura').text(data.temperatura + ' °C');
+                    $('#fecha').text('Última actualización: ' + data.fecha);
+                }
+            });
+        }
+        actualizarTemperatura();
+        setInterval(actualizarTemperatura, 5000);  // Actualiza cada 5 segundos
+    });
+    </script>
+</head>
+<body>
+    <h1>Panel de Control</h1>
+    <p>Temperatura actual: <span id="temperatura">Cargando...</span></p>
+    <p><span id="fecha"></span></p>
+</body>
+</html>

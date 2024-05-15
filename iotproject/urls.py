@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from sensorapp import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('panel-control/',views.panel_control, name='panel_control'),
+    path('api/temperatura/', views.ultima_temperatura, name='ultima_temperatura'),
+    path('recibir-temperatura/',views.recibir_temperatura, name='recibir_temperatura'),
 ]
