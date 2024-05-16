@@ -5,11 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Control</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 40px;
+            color: #333;
+        }
+        h1 {
+            color: #0056b3;
+        }
+        p {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        span {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
     <script>
     $(document).ready(function(){
         function actualizarTemperatura() {
             $.ajax({
-                url: '/ultima-temperatura/',  // Asegúrate de que esta URL coincida con la configurada en urls.py
+                url: '/ultima-temperatura/',
                 type: 'GET',
                 success: function(data) {
                     $('#temperatura').text(data.temperatura + ' °C');
@@ -18,7 +39,7 @@
             });
         }
         actualizarTemperatura();
-        setInterval(actualizarTemperatura, 5000);  // Actualiza cada 5 segundos
+        setInterval(actualizarTemperatura, 5000);
     });
     </script>
 </head>
