@@ -3,14 +3,6 @@ from .models import LecturaTemperatura
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-def recibir_temperatura(request):
-    if request.method == 'POST':
-        temperatura = request.POST.get('temperatura')
-        LecturaTemperatura.objects.create(temperatura=temperatura)
-        return JsonResponse({'mensaje':'Lectura de temperatura guardada correctamente'})
-    else:
-        return JsonResponse({'error':'Solicitud no válida. Se esperaba un POST'})
-
 
 def panel_control(request):
     lecturas = LecturaTemperatura.objects.all()
@@ -20,11 +12,19 @@ def panel_control(request):
 def recibir_temperatura(request):
     if request.method == 'POST':
         temperatura = request.POST.get('temperatura')
-        LecturaTemperatura.objects.create(temperatura=temperatura)
-        return JsonResponse({'status': 'success'})
+        print("POST data:", request.POST)  # Esto imprimirá los datos recibidos en la consola
+        print("Temperatura recibida:", temperatura)  # Verifica qué recibes exactamente aquí
+        if temperatura is not None:
+            try:
+                temperatura_float = float(temperatura)  # Intenta convertir a float
+                LecturaTemperatura.objects.create(temperatura=temperatura_float)
+                return JsonResponse({'status': 'success'})
+            except ValueError:
+                return JsonResponse({'status': 'bad request', 'error': 'Temperatura inválida'}, status=400)
+        else:
+            return JsonResponse({'status': 'bad request', 'error': 'Temperatura no proporcionada'}, status=400)
     else:
         return JsonResponse({'status': 'bad request'}, status=400)
-
 
 def ultima_temperatura(request):
     # Obtener la última lectura de temperatura

@@ -9,7 +9,7 @@
     $(document).ready(function(){
         function actualizarTemperatura() {
             $.ajax({
-                url: '/api/temperatura/',  // Asegúrate de que esta URL coincida con la configurada en urls.py
+                url: '/ultima-temperatura/',  // Asegúrate de que esta URL coincida con la configurada en urls.py
                 type: 'GET',
                 success: function(data) {
                     $('#temperatura').text(data.temperatura + ' °C');
@@ -28,3 +28,4 @@
     <p><span id="fecha"></span></p>
 </body>
 </html>
+
