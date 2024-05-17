@@ -50,3 +50,13 @@ def ultima_temperatura(request):
         }
 
     return JsonResponse(data)
+
+def datos_temperatura(request):
+    dos_dias_atras = timezone.now() - timezone.timedelta(days=2)
+    registros = LecturaTemperatura.objects.filter(fecha__gte=dos_dias_atras).order_by('fecha')
+
+    data = {
+        'fechas': [registro.fecha.strftime("%Y-%m-%d %H:%M:%S") for registro in registros],
+        'temperaturas': [registro.temperatura for registro in registros]
+    }
+    return JsonResponse(data)
