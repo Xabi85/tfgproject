@@ -24,4 +24,5 @@ urlpatterns = [
     path('panel-control/',views.panel_control, name='panel_control'),
     path('ultima-temperatura/', views.ultima_temperatura, name='ultima_temperatura'),
     path('recibir-temperatura/',views.recibir_temperatura, name='recibir_temperatura'),
+    path('ruta-a-datos-temperatura/', views.datos_temperatura, name='datos_temperatura'),
 ]
