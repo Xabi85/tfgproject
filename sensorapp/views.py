@@ -2,6 +2,9 @@ from django.shortcuts import render
 from .models import LecturaTemperatura
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
+
+
 
 
 def panel_control(request):
@@ -30,9 +33,10 @@ def ultima_temperatura(request):
     # Obtener la última lectura de temperatura
     ultima_lectura = LecturaTemperatura.objects.order_by('-fecha').first()
     if ultima_lectura:
+        fecha_local = timezone.localtime(ultima_lectura.fecha)
         data = {
             'temperatura': ultima_lectura.temperatura,
-            'fecha': ultima_lectura.fecha.strftime('%Y-%m-%d %H:%M:%S')  # Formateando la fecha y hora
+            'fecha': fecha_local.strftime('%Y-%m-%d %H:%M:%S')  # Formateando la fecha y hora
         }
     else:
         data = {
